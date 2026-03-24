@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marine Discoveries | Blue Genesis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Inter:wght@300;400;600&family=Orbitron:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body id="discoveries-view">
+    <div class="page-bg" style="background-image: url('assets/images/backgrounds/discoveries-bg.jpg');"></div>
+    <div class="overlay"></div>
+
+    <!-- Navigation -->
+    <header class="main-nav">
+        <div class="logo">
+            <span class="logo-text">BLUE GENESIS</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="ecosystem.html">Ecosystem</a></li>
+                <li><a href="discoveries.html">Discoveries</a></li>
+                <li><a href="research.html">Research Vault</a></li>
+                <li><a href="simulator.html">Simulator</a></li>
+                <li><a href="impact.html">Impact</a></li>
+                <li><a href="partners.html">Partnerships</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page-container hero-discovery">
+        <div class="content-section glass" style="text-align: center; max-width: 800px;">
+            <h1 class="title-glow">Ocean Discoveries</h1>
+            <p style="margin-bottom: 2rem; color: var(--aqua-cyan);">Unlock the hidden secrets of the blue biological
+                library from the Andaman trenches.</p>
+
+            <div class="discovery-card glass" style="padding: 3rem; margin-top: 2rem; border-color: var(--aqua-cyan);">
+                <button onclick="getDiscovery()" class="btn btn-primary"
+                    style="margin-top: 2rem; padding: 1rem 2rem; cursor: pointer;">Discover Marine Innovation</button>
+                <p id="discovery-box" style="font-size: 1.4rem; min-height: 100px; margin-top: 2rem;"></p>
+            </div>
+        </div>
+    </main>
+
+    <div id="nereus" class="nereus-assistant">
+        <div class="nereus-orb"></div>
+        <div class="nereus-chat glass">
+            <p id="nereus-text">Searching the Andaman currents...</p>
+            <input type="text" id="nereus-input" placeholder="Ask Nereus...">
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-logo">BLUE GENESIS</div>
+        <p>Andaman & Nicobar Islands | Where Ocean Intelligence Powers the Future</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

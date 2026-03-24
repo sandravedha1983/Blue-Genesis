@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore the Ocean | Blue Genesis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Inter:wght@300;400;600&family=Orbitron:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body id="explore-view">
+    <!-- Cinematic Video Background -->
+    <div class="full-screen-video-container">
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="assets/videos/Oceans.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="main-nav">
+        <div class="logo">
+            <span class="logo-text">BLUE GENESIS</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="ecosystem.html">Ecosystem</a></li>
+                <li><a href="discoveries.html">Discoveries</a></li>
+                <li><a href="research.html">Research Vault</a></li>
+                <li><a href="simulator.html">Simulator</a></li>
+                <li><a href="impact.html">Impact</a></li>
+                <li><a href="partners.html">Partnerships</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page-container">
+        <h1 class="title-glow">Explore the Ocean</h1>
+        <p class="subtitle"
+            style="text-align: center; margin-bottom: 3rem; color: var(--aqua-cyan); letter-spacing: 2px;">Dive into
+            Marine Ecosystems and Ocean Innovation</p>
+
+        <div class="card-grid content-section" style="margin-bottom: 0; padding-bottom: 2rem;">
+            <!-- Surface Ocean – AquaVeda -->
+            <div id="aqua-img" class="info-card glass ocean-card" onclick="toggleSection('aqua')"
+                style="background: linear-gradient(rgba(1, 11, 26, 0.8), rgba(0, 242, 255, 0.1)), url('assets/images/aquaveda.png') no-repeat center center/cover; cursor: pointer;">
+                <div class="label"
+                    style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; color: var(--aqua-cyan); margin-bottom: 0.5rem; font-weight: 700;">
+                    Surface Zone</div>
+                <h3>AquaVeda</h3>
+            </div>
+
+            <!-- Mid Ocean – OceanInk -->
+            <div id="ink-img" class="info-card glass ocean-card" onclick="toggleSection('ink')"
+                style="background: linear-gradient(rgba(1, 11, 26, 0.8), rgba(77, 148, 255, 0.1)), url('assets/images/oceanink.png') no-repeat center center/cover; cursor: pointer;">
+                <div class="label"
+                    style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; color: var(--aqua-cyan); margin-bottom: 0.5rem; font-weight: 700;">
+                    Mesopelagic Zone</div>
+                <h3>OceanInk</h3>
+            </div>
+
+            <!-- Deep Ocean – BioVaultX -->
+            <div id="vault-img" class="info-card glass ocean-card" onclick="toggleSection('vault')"
+                style="background: linear-gradient(rgba(1, 11, 26, 0.8), rgba(0, 212, 255, 0.1)), url('assets/images/biovaultx.png') no-repeat center center/cover; cursor: pointer;">
+                <div class="label"
+                    style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; color: var(--aqua-cyan); margin-bottom: 0.5rem; font-weight: 700;">
+                    Abyssal Zone</div>
+                <h3>BioVaultX</h3>
+            </div>
+        </div>
+
+        <div class="content-section" style="padding-top: 0; margin-top: 0;">
+            <div id="aqua" class="ocean-content glass" style="display: none; padding: 3rem; margin-top: 2rem;">
+                <h3 style="color: var(--aqua-cyan);">AquaVeda</h3>
+                <p class="tagline">Surface Zone Agriculture</p>
+                <p>Sustainable seaweed farming for protein, nutraceuticals, and bio-stimulants. Our Andaman coastal
+                    farms are the foundation of ocean agriculture.</p>
+                <ul style="margin: 1.5rem 0; list-style: square; color: var(--soft-white);">
+                    <li>Seaweed Protein</li>
+                    <li>Agricultural Bio-stimulants</li>
+                    <li>Sustainable Food Ingredients</li>
+                </ul>
+                <div id="farm-status" style="margin-bottom: 15px; font-weight: bold; color: var(--teal-glow);">
+                    Connecting to sensors...</div>
+                <a href="ecosystem.html#surface" class="btn btn-secondary">Explore AquaVeda</a>
+            </div>
+
+            <div id="ink" class="ocean-content glass" style="display: none; padding: 3rem; margin-top: 2rem;">
+                <h3 style="color: var(--aqua-cyan);">OceanInk</h3>
+                <p class="tagline">Mid-Ocean Biomaterials</p>
+                <p>Transforming marine biomass into high-value biopolymers, eco-textile dyes, and biodegradable
+                    packaging solutions.</p>
+                <div
+                    style="margin: 1.5rem 0; border-top: 1px solid var(--glass-border); padding-top: 1rem; color: var(--aqua-cyan); font-family: var(--f-header); font-size: 0.9rem;">
+                    <span>Seaweed → Biopolymer → Products</span>
+                </div>
+                <div id="product-status" style="margin-bottom: 15px; font-weight: bold; color: var(--teal-glow);">
+                    Connecting to processing...</div>
+                <a href="ecosystem.html#mid" class="btn btn-secondary">Explore OceanInk</a>
+            </div>
+
+            <div id="vault" class="ocean-content glass" style="display: none; padding: 3rem; margin-top: 2rem;">
+                <h3 style="color: var(--aqua-cyan);">BioVaultX</h3>
+                <p class="tagline">Deep-Ocean Genetic Discovery</p>
+                <p>Preserving and exploring the genetic potential of deep-sea microbes and enzymes for advanced
+                    pharmaceuticals and climate technology.</p>
+                <div
+                    style="margin-top: 1.5rem; padding: 10px; background: rgba(0, 242, 255, 0.05); border: 1px dashed var(--aqua-cyan); color: var(--aqua-cyan); font-size: 0.8rem; text-align: center;">
+                    Bioluminescent Discovery Active</div>
+                <div id="research-status"
+                    style="margin-top: 15px; margin-bottom: 15px; font-weight: bold; color: var(--teal-glow);">
+                    Connecting to vault...</div>
+                <a href="ecosystem.html#deep" class="btn btn-secondary">Explore BioVaultX</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Nereus AI -->
+    <div id="nereus" class="nereus-assistant">
+        <div class="nereus-orb"></div>
+        <div class="nereus-chat glass">
+            <p id="nereus-text">Searching the Andaman currents...</p>
+            <input type="text" id="nereus-input" placeholder="Ask Nereus...">
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-logo">BLUE GENESIS</div>
+        <p>Andaman & Nicobar Islands | Where Ocean Intelligence Powers the Future</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

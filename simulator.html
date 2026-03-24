@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Economy Simulator | Blue Genesis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Inter:wght@300;400;600&family=Orbitron:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .control-panel {
+            padding: 3rem;
+        }
+
+        .slider-wrap {
+            margin-bottom: 2.5rem;
+        }
+
+        .slider-wrap label {
+            display: block;
+            margin-bottom: 1rem;
+            font-family: var(--f-header);
+            font-size: 0.9rem;
+        }
+
+        input[type=range] {
+            width: 100%;
+            height: 6px;
+            background: var(--ocean-blue);
+            border-radius: 5px;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--aqua-cyan);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--aqua-cyan);
+        }
+
+        .metric-display {
+            text-align: center;
+        }
+
+        .metric-num {
+            font-size: 4rem;
+            font-family: var(--f-header);
+            color: var(--teal-glow);
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            opacity: 0.7;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+
+<body id="simulator-view">
+    <div class="page-bg" style="background-image: url('assets/images/backgrounds/simulator-bg.jpg');"></div>
+    <div class="overlay"></div>
+
+    <!-- Navigation -->
+    <header class="main-nav">
+        <div class="logo">
+            <span class="logo-text">BLUE GENESIS</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="ecosystem.html">Ecosystem</a></li>
+                <li><a href="discoveries.html">Discoveries</a></li>
+                <li><a href="research.html">Research Vault</a></li>
+                <li><a href="simulator.html">Simulator</a></li>
+                <li><a href="impact.html">Impact</a></li>
+                <li><a href="partners.html">Partnerships</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page-container hero-simulator">
+        <div class="content-section glass" style="max-width: 1000px; width: 90%;">
+            <h1 class="title-glow">Blue Economy Simulator</h1>
+            <p style="text-align: center; margin-bottom: 3rem; color: var(--aqua-cyan);">Build a virtual ocean economy
+                and measure the environmental impact.</p>
+
+            <div class="simulator-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
+                <div class="controls glass" style="padding: 2.5rem; text-align: center;">
+                    <h3>Ocean Parameters</h3>
+                    <input id="temp" placeholder="Temperature"
+                        style="display:block; margin: 1.5rem auto; padding: 0.8rem; border-radius: 5px; border: 1px solid var(--aqua-cyan); background: rgba(0,0,0,0.5); color: white; width: 80%;">
+                    <input id="ph" placeholder="pH"
+                        style="display:block; margin: 1.5rem auto; padding: 0.8rem; border-radius: 5px; border: 1px solid var(--aqua-cyan); background: rgba(0,0,0,0.5); color: white; width: 80%;">
+                    <input id="salinity" placeholder="Salinity"
+                        style="display:block; margin: 1.5rem auto; padding: 0.8rem; border-radius: 5px; border: 1px solid var(--aqua-cyan); background: rgba(0,0,0,0.5); color: white; width: 80%;">
+                </div>
+
+                <div class="metrics glass"
+                    style="padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-around; text-align: center;">
+                    <h3>Prediction Result</h3>
+                    <p id="result"
+                        style="font-size: 1.2rem; color: var(--teal-glow); font-family: var(--f-header); margin-bottom: 2rem;">
+                        Enter parameters to predict zone.
+                    </p>
+                    <button class="btn btn-primary" onclick="predictZone()"
+                        style="padding: 1rem 2rem; cursor: pointer;">Predict Ocean Zone</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="nereus" class="nereus-assistant">
+        <div class="nereus-orb"></div>
+        <div class="nereus-chat glass">
+            <p id="nereus-text">Searching the Andaman currents...</p>
+            <input type="text" id="nereus-input" placeholder="Ask Nereus...">
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
