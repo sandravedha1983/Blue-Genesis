@@ -1,7 +1,9 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+pydantic
 python-jose
 passlib
 requests
 aiofiles
-python-jose
-passlib
-requests
