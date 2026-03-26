@@ -6,5 +6,6 @@ pydantic
 python-jose
 passlib
 requests
-tensorflow
-numpy
+python-jose
+passlib
+requests
