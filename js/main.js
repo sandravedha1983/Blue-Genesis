@@ -2,44 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
     initNereus();
     if (document.querySelectorAll('.depth-zone').length > 0) initScrollEffects();
     if (document.querySelectorAll('.node-btn').length > 0) initBiomeInteractions();
-    if (document.querySelector('.research-grid') || document.getElementById('research-status')) loadResearch();
+
+    // Global Status Loaders
+    if (document.getElementById('farm-status')) loadFarms();
+    if (document.getElementById('product-status')) loadProducts();
+    if (document.getElementById('research-status')) loadResearch();
+
     if (document.getElementById('ecosystem-view')) handleEcosystemHash();
 
-    // AquaVeda Farming Section
-    if (document.getElementById('farm-status')) {
-        fetch("http://127.0.0.1:8000/farms/status")
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                document.getElementById("farm-status").innerText =
-                    data.status || "Farming Active";
-            });
-    }
-
-    // OceanInk Products Section
-    if (document.getElementById('product-status')) {
-        fetch("http://127.0.0.1:8000/products/status")
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                document.getElementById("product-status").innerText =
-                    data.status || "Products Active";
-            });
-    }
-
-    // BioVaultX Research Section
-    if (document.getElementById('research-status')) {
-        fetch("http://127.0.0.1:8000/research/status")
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                document.getElementById("research-status").innerText =
-                    data.research || "Research Active";
-            });
-    }
-
-    if (typeof initThemeSwitching === 'function') initThemeSwitching(); // Global theme management
-
+    // Theme and AI Images
+    if (typeof initThemeSwitching === 'function') initThemeSwitching();
     loadAIImage("futuristic seaweed farm ocean", "aqua-img");
     loadAIImage("marine biomaterial lab", "ink-img");
     loadAIImage("deep ocean biotech microbes", "vault-img");
@@ -62,10 +34,8 @@ async function loadAIImage(prompt, elementId) {
 }
 
 function toggleSection(id) {
-    const sections = document.querySelectorAll(".ocean-content");
-
-    sections.forEach(section => {
-        section.style.display = "none";
+    document.querySelectorAll(".ocean-content").forEach(sec => {
+        sec.style.display = "none";
     });
 
     const selected = document.getElementById(id);
@@ -74,123 +44,106 @@ function toggleSection(id) {
     }
 }
 
-
-
-function getDiscovery() {
-    fetch("http://127.0.0.1:8000/research/status")
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            if (document.getElementById("discovery-box")) {
-                document.getElementById("discovery-box").innerText =
-                    data.research || "New marine discovery unlocked!";
-            }
-        });
+async function loadFarms() {
+    const data = await fetchAPI("/farms/status");
+    if (data) {
+        document.getElementById("farm-status").innerText =
+            data.status || data.farms || "Farming Active";
+    }
 }
 
-function predictZone() {
+async function loadProducts() {
+    const data = await fetchAPI("/products/status");
+    if (data) {
+        document.getElementById("product-status").innerText =
+            data.status || data.products || "Products Active";
+    }
+}
+
+async function loadResearch() {
+    const data = await fetchAPI("/research/status");
+    if (data) {
+        document.getElementById("research-status").innerText = data.research || "Research Active";
+    }
+}
+
+async function getDiscovery() {
+    // Attempt backend first
+    const data = await fetchAPI("/api/discoveries");
+    if (data && data.message) {
+        document.getElementById("discovery-text").innerText = data.message;
+    } else {
+        // Fallback to local discoveries if backend fails or doesn't exist
+        const discoveries = [
+            "Marine bacteria produce biodegradable polymers",
+            "Deep sea algae create sustainable dyes",
+            "Ocean microbes enable new antibiotics"
+        ];
+        const random = discoveries[Math.floor(Math.random() * discoveries.length)];
+        if (document.getElementById("discovery-text")) {
+            document.getElementById("discovery-text").innerText = random;
+        }
+    }
+}
+
+async function predictZone() {
     const temp = document.getElementById("temp").value;
     const ph = document.getElementById("ph").value;
     const salinity = document.getElementById("salinity").value;
 
-    fetch(`http://127.0.0.1:8000/ocean/predict-zone?temp=${temp}&ph=${ph}&salinity=${salinity}`, {
-        method: "POST"
-    })
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("result").innerText =
-                "Ocean Zone: " + JSON.stringify(data);
-        });
+    const data = await fetchAPI(
+        `/ocean/predict-zone?temp=${temp}&ph=${ph}&salinity=${salinity}`,
+        { method: "POST" }
+    );
+
+    if (data) {
+        document.getElementById("prediction-result").innerText =
+            "Predicted Zone: " + (data.prediction || JSON.stringify(data));
+    }
 }
 
-function loadResearch() {
-    fetch("http://127.0.0.1:8000/research/status")
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("research-data").innerText = data.research;
-        });
+async function askNereus() {
+    const input = document.getElementById("nereus-input").value;
+    if (!input) return;
+
+    // Use auth status as a health check / dummy response for integration as requested
+    const data = await fetchAPI("/auth/status");
+
+    if (document.getElementById("nereus-response")) {
+        document.getElementById("nereus-response").innerText =
+            "Nereus: " + (data?.auth || "Ocean intelligence active");
+    }
+
+    // Clear input
+    document.getElementById("nereus-input").value = '';
 }
 
-function supportAction() {
-    alert("Support successful! 🌊");
-}
-
-/**
- * Nereus AI Assistant Logic
- */
 function initNereus() {
     const orb = document.querySelector('.nereus-orb');
     const chat = document.querySelector('.nereus-chat');
     const input = document.getElementById('nereus-input');
-    const text = document.getElementById('nereus-text');
 
-    const knowledge = {
-        'carbon': 'Seaweed farms absorb enormous amounts of carbon—up to 20 times more per acre than land forests.',
-        'biomaterials': 'Marine biopolymers can replace petroleum-based plastics with 100% biodegradable ocean-safe materials.',
-        'biotech': 'Ocean microorganisms offer unique enzymes for medical breakthroughs, from antibiotics to cancer treatment.',
-        'andaman': 'Blue Genesis is headquartered in the Andaman Islands to leverage pristine marine biodiversity.',
-        'seaweed': 'We cultivate Kappaphycus and Gracilaria for protein and high-value extracts.',
-        'hello': 'Greetings, explorer. I am Nereus. Ask me about the Blue Economy.',
-        'nereus': 'I am the Blue Genesis Ocean Intelligence interface, here to guide your discovery.'
-    };
+    if (!orb || !chat) return;
 
     orb.addEventListener('click', () => {
         const isVisible = chat.style.display === 'block';
         chat.style.display = isVisible ? 'none' : 'block';
-        if (!isVisible) text.innerText = knowledge['hello'];
     });
 
     input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            const query = input.value.toLowerCase();
-            const fallbackLogic = () => {
-                let response = "My sensors don't have that data yet. Try asking about 'Carbon', 'Seaweed', or 'Biomaterials'.";
-                for (let key in knowledge) {
-                    if (query.includes(key)) {
-                        response = knowledge[key];
-                        break;
-                    }
-                }
-                text.innerText = response;
-            };
-
-            fetch("http://localhost:5000/api/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: query })
-            })
-                .then(res => {
-                    if (!res.ok) throw new Error("API not available.");
-                    return res.json();
-                })
-                .then(data => {
-                    text.innerText = data.response || data.message || data.text;
-                })
-                .catch(err => {
-                    console.warn(err);
-                    fallbackLogic();
-                });
-            input.value = '';
+            askNereus();
         }
     });
 }
 
-// Removed old initSimulator
-
-/**
- * Scroll triggered animations and transitions
- */
 function initScrollEffects() {
     const sections = document.querySelectorAll('.biome-section');
-
     window.addEventListener('scroll', () => {
         const scrollPos = window.scrollY;
-
         sections.forEach(sec => {
             const bg = sec.querySelector('.biome-bg');
             const rect = sec.getBoundingClientRect();
-
-            // Subtle parallax for biome backgrounds
             if (rect.top < window.innerHeight && rect.bottom > 0) {
                 const speed = 0.2;
                 const yPos = (rect.top * speed);
@@ -201,35 +154,31 @@ function initScrollEffects() {
             }
         });
 
-        // Nav blur effect
         const nav = document.querySelector('.main-nav');
-        if (scrollPos > 50) {
-            nav.style.background = 'rgba(1, 11, 26, 0.9)';
-            nav.style.padding = '0.8rem 5%';
-        } else {
-            nav.style.background = 'var(--glass-bg)';
-            nav.style.padding = '1.5rem 5%';
+        if (nav) {
+            if (scrollPos > 50) {
+                nav.style.background = 'rgba(1, 11, 26, 0.9)';
+                nav.style.padding = '0.8rem 5%';
+            } else {
+                nav.style.background = 'var(--glass-bg)';
+                nav.style.padding = '1.5rem 5%';
+            }
         }
     });
 }
 
-// Removed old initDiscoveryEngine
-
-/**
- * Biome Species Modal/Overlay
- */
 function initBiomeInteractions() {
     const nodes = document.querySelectorAll('.node-btn');
-
     nodes.forEach(node => {
-        node.addEventListener('click', () => {
-            fetch("http://127.0.0.1:8000/research/status")
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data);
-                    alert("BLUE GENESIS ARCHIVE:\n\n" + data.research);
-                })
-                .catch(err => console.error(err));
+        node.addEventListener('click', async () => {
+            const info = node.getAttribute('data-info');
+            const data = await fetchAPI("/api/research");
+            let content = "Research mode active.";
+            if (Array.isArray(data)) {
+                const match = data.find(r => r.title.toLowerCase().includes(info.toLowerCase()));
+                if (match) content = `${match.title}:\n${match.desc}`;
+            }
+            alert("BLUE GENESIS ARCHIVE:\n\n" + content);
         });
     });
 }
@@ -237,18 +186,11 @@ function initBiomeInteractions() {
 function handleEcosystemHash() {
     const hash = window.location.hash;
     const cards = document.querySelectorAll(".ecosystem-card");
-
     if (hash && (hash === "#surface" || hash === "#mid" || hash === "#deep")) {
         cards.forEach(card => {
-            if ("#" + card.id === hash) {
-                card.style.display = "block";
-            } else {
-                card.style.display = "none";
-            }
+            card.style.display = ("#" + card.id === hash) ? "block" : "none";
         });
     } else {
-        cards.forEach(card => {
-            card.style.display = "block";
-        });
+        cards.forEach(card => card.style.display = "block");
     }
 }

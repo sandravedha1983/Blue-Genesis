@@ -117,7 +117,7 @@
                 <div class="metrics glass"
                     style="padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-around; text-align: center;">
                     <h3>Prediction Result</h3>
-                    <p id="result"
+                    <p id="prediction-result"
                         style="font-size: 1.2rem; color: var(--teal-glow); font-family: var(--f-header); margin-bottom: 2rem;">
                         Enter parameters to predict zone.
                     </p>
@@ -132,11 +132,13 @@
         <div class="nereus-orb"></div>
         <div class="nereus-chat glass">
             <p id="nereus-text">Searching the Andaman currents...</p>
+            <p id="nereus-response" style="color: var(--aqua-cyan); margin-bottom: 1rem;"></p>
             <input type="text" id="nereus-input" placeholder="Ask Nereus...">
         </div>
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js?v=1.1"></script>
 </body>
 
 </html>
